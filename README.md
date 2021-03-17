@@ -1,0 +1,2 @@
+# AutoTyper
+The robot typer.
