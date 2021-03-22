@@ -14,7 +14,42 @@
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>14</maven.compiler.source>
+        <maven.compiler.target>14</maven.compiler.target>
     </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <mainClass>com.sidetracked.autotyper.App</mainClass>
+                </configuration>
+            </plugin>
+            <plugin> 
+                <artifactId>maven-assembly-plugin</artifactId> 
+                <executions> 
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase> 
+                        <goals> 
+                            <goal>single</goal> 
+                        </goals> 
+                    </execution> 
+                </executions> 
+                <configuration> 
+                    <descriptorRefs> 
+                        <descriptorRef>jar-with-dependencies</descriptorRef> 
+                    </descriptorRefs> 
+                    <archive>
+                        <manifestFile/>
+                        <manifest>
+                            <mainClass>com.sidetracked.autotyper.App</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration> 
+            </plugin> 
+        </plugins>
+    </build>
 </project>
