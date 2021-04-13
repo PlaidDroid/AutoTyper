@@ -1,4 +1,4 @@
-package com.sidetracked.autotyper;
+package com.sidetrackd.autotyper;
 
 /**
  * source: https://stackoverflow.com/a/37179377/9445046
