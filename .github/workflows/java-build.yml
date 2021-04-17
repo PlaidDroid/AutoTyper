@@ -15,9 +15,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-    defaults:
-        run:
-            shell: bash
+
     steps:
     - uses: actions/checkout@v2
     - name: set up JDK 14
@@ -42,7 +40,7 @@ jobs:
       if: ${{ runner.os != 'Linux' }}
       run: |
         sh build.sh
-        mv AutoTyper.* release
+        mv AutoTyper.* *.dmg release
     - run: mv target/AutoTyper-*-shaded.jar release
     - name: upload artifacts
       uses: actions/upload-artifact@v2
