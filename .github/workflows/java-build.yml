@@ -54,6 +54,7 @@ jobs:
       
   job2:
     name: Release
+    needs: job1
     runs-on: ubuntu-latest
     steps:
     - name: get release artifacts
