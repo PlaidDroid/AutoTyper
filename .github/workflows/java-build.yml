@@ -24,9 +24,9 @@ jobs:
         distribution: 'adopt'
     - name: set env
       run: |
-        echo ::set-env name=PROJECT::$(echo 'AutoTyper')
-        echo ::set-env name=MAIN_CLASS::$(echo 'com.sidetrackd.autotyper.App'
-        echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF#refs/*/})
+        echo "PROJECT=AutoTyper" >> $GITHUB_ENV
+        echo "MAIN_CLASS=com.sidetrackd.autotyper.App" >> $GITHUB_ENV 
+        echo "RELEASE_VERSION=`${GITHUB_REF#refs/*/}`"  >> $GITHUB_ENV
     - name: cache maven packages
       uses: actions/cache@v2
       with:
@@ -39,16 +39,16 @@ jobs:
     - name: build executable for linux
       if: ${{ runner.os == 'Linux' }}
       run: |
-        jpackage --input target/ --name $PROJECT --main-jar $PROJECT-$RELEASE_VERSION-shaded.jar --main-class $MAIN_CLASS --type app-image
-        jpackage --name $PROJECT-$RELEASE_VERSION --app-image $PROJECT
-        tar -czvf $PROJECT-$RELEASE_VERSION.tar.gz $PROJECT/
-        mv $PROJECT-$RELEASE_VERSION.* release
+        jpackage --input target/ --name "${{ env.PROJECT }}" --main-jar "${{ env.PROJECT }}"-"${{ env.RELEASE_VERSION }}"-shaded.jar --main-class "${{ env.MAIN_CLASS }} --type app-image
+        jpackage --name "${{ env.PROJECT }}"-"${{ env.RELEASE_VERSION }}" --app-image "${{ env.PROJECT }}"
+        tar -czvf "${{ env.PROJECT }}"-"${{ env.RELEASE_VERSION }}".tar.gz "${{ env.PROJECT }}"
+        mv "${{ env.PROJECT }}"-"${{ env.RELEASE_VERSION }}".* release
     - name: build executable for others
       if: ${{ runner.os != 'Linux' }}
       run: |
-        jpackage --input target/ --name $PROJECT-$RELEASE_VERSION --main-jar $PROJECT-$RELEASE_VERSION-shaded.jar --main-class $MAIN_CLASS
-        mv $PROJECT-$RELEASE_VERSION.* release
-    - run: mv target/$PROJECT-$RELEASE_VERSION-shaded.jar release
+        jpackage --input target/ --name "${{ env.PROJECT }}" --main-jar "${{ env.PROJECT }}"-"${{ env.RELEASE_VERSION }}"-shaded.jar --main-class "${{ env.MAIN_CLASS }}
+        mv "${{ env.PROJECT }}"-"${{ env.RELEASE_VERSION }}".* release
+    - run: mv target/"${{ env.PROJECT }}"-"${{ env.RELEASE_VERSION }}"-shaded.jar release
     - name: upload artifacts
       uses: actions/upload-artifact@v2
       with:
@@ -59,9 +59,6 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-    - name: set env
-      run: |
-        echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF#refs/*/})
     - name: get release artifacts
       uses: actions/download-artifact@v2
       with:
