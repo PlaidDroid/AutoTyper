@@ -18,33 +18,32 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: set up JDK 14
+    - name: Set up JDK 14
       uses: actions/setup-java@v2
       with:
         java-version: '14'
         distribution: 'adopt'
-    - name: cache maven packages
+    - name: Cache maven packages
       uses: actions/cache@v2
       with:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
-    - run: mkdir release
-    - name: build executable for linux
+    - name: Create release folder
+      run: mkdir release
+    - name: Build executable - linux
       if: ${{ runner.os == 'Linux' }}
       run: |
         sh build-linux.sh
         tar -czvf AutoTyper.tar.gz AutoTyper
         mv AutoTyper.* *.deb release
-    - name: build executable for others
+    - name: Build executable - others
       if: ${{ runner.os != 'Linux' }}
-      run: sh build.sh
-    - if: ${{ runner.os == 'Windows' }}
-      run: mv *.exe release
-    - if: ${{ runner.os == 'macOS' }}
-      run: mv *.dmg release
+      run: |
+        sh build.sh
+        mv AutoTyper-*.* release
     - run: mv target/AutoTyper-*-shaded.jar release
-    - name: upload artifacts
+    - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
         name: release
@@ -55,11 +54,11 @@ jobs:
     needs: job1
     runs-on: ubuntu-latest
     steps:
-    - name: get release artifacts
+    - name: Get release artifacts
       uses: actions/download-artifact@v2
       with:
         name: release
-    - name: create release
+    - name: Create release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
