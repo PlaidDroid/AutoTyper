@@ -50,7 +50,7 @@ jobs:
         mv $PROJECT-$RELEASE_VERSION.* release
     - run: mv target/$PROJECT-$RELEASE_VERSION-shaded.jar release
     - name: upload artifacts
-    - uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v2
       with:
         name: release
         path: release/
