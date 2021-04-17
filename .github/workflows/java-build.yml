@@ -62,7 +62,7 @@ jobs:
     - name: set env
       run: |
         echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF#refs/*/})
-        echo ::set-env name=PRERELEASE::$(`if [[ $RELEASE_VERSION =~ "-alpha" ]] || [[ $VERSION =~ "-beta" ]]; then echo 1; else echo 0; fi`)
+        echo ::set-env name=PRERELEASE::$(`if [[ $RELEASE_VERSION =~ "-alpha" ]] || [[ $RELEASE_VERSION =~ "-beta" ]]; then echo true; else echo false; fi`)
     - name: get release artifacts
       uses: actions/download-artifact@v2
       with:
