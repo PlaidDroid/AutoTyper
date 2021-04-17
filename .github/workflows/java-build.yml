@@ -38,7 +38,8 @@ jobs:
       run: |
         sh build-linux.sh
         tar -czvf AutoTyper.tar.gz AutoTyper
-        mv 'AutoTyper.*' release
+        ls
+        mv AutoTyper.* release
     - name: build executable for others
       if: ${{ runner.os != 'Linux' }}
       run: |
