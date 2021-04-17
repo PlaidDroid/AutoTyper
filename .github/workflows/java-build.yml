@@ -56,8 +56,6 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: release
-    - name: unzip contents
-      run: unzip release.zip
     - name: create release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
