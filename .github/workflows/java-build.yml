@@ -38,9 +38,11 @@ jobs:
         mv AutoTyper.* *.deb release
     - name: build executable for others
       if: ${{ runner.os != 'Linux' }}
-      run: |
-        sh build.sh
-        mv AutoTyper.* *.dmg release
+      run: sh build.sh
+    - if: ${{ runner.os == 'Windows' }}
+      run: mv AutoTyper.* release
+    - if: ${{ runner.os == 'macOS' }}
+      run: mv *.dmg release
     - run: mv target/AutoTyper-*-shaded.jar release
     - name: upload artifacts
       uses: actions/upload-artifact@v2
