@@ -30,7 +30,9 @@ jobs:
         restore-keys: ${{ runner.os }}-m2
     - name: build with maven
       run: mvn package
-    - run: mkdir release
+    - run: |
+        ls target
+        mkdir release
     - name: build executable for linux
       if: ${{ runner.os == 'Linux' }}
       run: |
