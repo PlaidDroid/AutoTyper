@@ -28,24 +28,19 @@ jobs:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
-    - name: build with maven
-      run: mvn package
-    - run: |
-        ls target
-        mkdir release
+    - run: mkdir release
     - name: build executable for linux
       if: ${{ runner.os == 'Linux' }}
       run: |
         sh build-linux.sh
         tar -czvf AutoTyper.tar.gz AutoTyper
-        ls
-        mv AutoTyper.* release
+        mv AutoTyper.* *.deb release
     - name: build executable for others
       if: ${{ runner.os != 'Linux' }}
       run: |
         sh build.sh
-        mv 'AutoTyper.*' release
-    - run: mv 'target/AutoTyper-*-shaded.jar' release
+        mv AutoTyper.* release
+    - run: mv target/AutoTyper-*-shaded.jar release
     - name: upload artifacts
       uses: actions/upload-artifact@v2
       with:
