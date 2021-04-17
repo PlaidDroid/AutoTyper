@@ -22,11 +22,6 @@ jobs:
       with:
         java-version: '14'
         distribution: 'adopt'
-    - name: set env
-      run: |
-        echo "PROJECT=AutoTyper" >> $GITHUB_ENV
-        echo "MAIN_CLASS=com.sidetrackd.autotyper.App" >> $GITHUB_ENV 
-        echo "RELEASE_VERSION=`${GITHUB_REF#refs/*/}`"  >> $GITHUB_ENV
     - name: cache maven packages
       uses: actions/cache@v2
       with:
@@ -39,16 +34,16 @@ jobs:
     - name: build executable for linux
       if: ${{ runner.os == 'Linux' }}
       run: |
-        jpackage --input target/ --name "${{ env.PROJECT }}" --main-jar "${{ env.PROJECT }}"-"${{ env.RELEASE_VERSION }}"-shaded.jar --main-class "${{ env.MAIN_CLASS }} --type app-image
-        jpackage --name "${{ env.PROJECT }}"-"${{ env.RELEASE_VERSION }}" --app-image "${{ env.PROJECT }}"
-        tar -czvf "${{ env.PROJECT }}"-"${{ env.RELEASE_VERSION }}".tar.gz "${{ env.PROJECT }}"
-        mv "${{ env.PROJECT }}"-"${{ env.RELEASE_VERSION }}".* release
+        jpackage --input target/ --name AutoTyper --main-jar AutoTyper-*-shaded.jar --main-class com.sidetrackd.autotyper.App --type app-image
+        jpackage --name AutoTyper --app-image AutoTyper
+        tar -czvf AutoTyper.tar.gz AutoTyper
+        mv AutoTyper.* release
     - name: build executable for others
       if: ${{ runner.os != 'Linux' }}
       run: |
-        jpackage --input target/ --name "${{ env.PROJECT }}" --main-jar "${{ env.PROJECT }}"-"${{ env.RELEASE_VERSION }}"-shaded.jar --main-class "${{ env.MAIN_CLASS }}
-        mv "${{ env.PROJECT }}"-"${{ env.RELEASE_VERSION }}".* release
-    - run: mv target/"${{ env.PROJECT }}"-"${{ env.RELEASE_VERSION }}"-shaded.jar release
+        jpackage --input target/ --name AutoTyper --main-jar AutoTyper-*-shaded.jar --main-class com.sidetrackd.autotyper.App
+        mv AutoTyper.* release
+    - run: mv target/AutoTyper-*-shaded.jar release
     - name: upload artifacts
       uses: actions/upload-artifact@v2
       with:
@@ -73,4 +68,3 @@ jobs:
         files: release/*
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
