@@ -34,7 +34,7 @@ jobs:
     - name: build executable for linux
       if: ${{ runner.os == 'Linux' }}
       run: |
-        jpackage --input target/ --name AutoTyper --main-jar "AutoTyper-*-shaded.jar" --main-class com.sidetrackd.autotyper.App --type app-image
+        jpackage --input target/ --name AutoTyper --main-jar `AutoTyper-*-shaded.jar` --main-class com.sidetrackd.autotyper.App --type app-image
         jpackage --name AutoTyper --app-image AutoTyper
         tar -czvf AutoTyper.tar.gz AutoTyper
         mv AutoTyper.* release
