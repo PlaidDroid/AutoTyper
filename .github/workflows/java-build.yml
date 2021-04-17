@@ -40,7 +40,7 @@ jobs:
       if: ${{ runner.os != 'Linux' }}
       run: sh build.sh
     - if: ${{ runner.os == 'Windows' }}
-      run: mv AutoTyper.* release
+      run: mv *.exe release
     - if: ${{ runner.os == 'macOS' }}
       run: mv *.dmg release
     - run: mv target/AutoTyper-*-shaded.jar release
