@@ -4,7 +4,9 @@
 
 > _The robot typer._
 
-Ever had a situation wherein the copy-paste trick doesn't workout? Well, I've been there, and as they say, '_Necessity is the mother of invention_'. So, this software types in for you. Yes there are perhaps other free software that does just that, but I couldn't find any that actually helped, and so I wrote one myself (I should have looked harder).
+Ever had a situation wherein the copy-paste trick doesn't workout? Well, I've been there, and as they say, '_Necessity is the mother of invention_'. So, this software types in for you. Yes there are perhaps other free software that does just that, but I couldn't find any that actually helped, and so I wrote one myself (I should have looked harder).  
+
+![image](https://user-images.githubusercontent.com/26256974/115617488-12ca0b00-a30f-11eb-94fa-98f8d0d30911.png)
 
 ## Instructions 📖
 Just write your ~sh\*t~ stuff onto a file, select it, and _voilà_.
